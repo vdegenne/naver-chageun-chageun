@@ -1313,6 +1313,18 @@ function bindEventListener (el) {
 }
 
 window.onload = () => {
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('inp_label_check')) {
+      setTimeout(init, 1000);
+    }
+  });
+  window.addEventListener('hashchange', () => {
+    setTimeout(init, 1000);
+  });
+};
+
+
+function init () {
   const sentences = [...document.querySelectorAll('.translate > p')];
   sentences.forEach(p => {
     const parts = p.textContent.trim().match(/\s|[^\s]+/g);
@@ -1323,9 +1335,8 @@ window.onload = () => {
     ${parts.map(p => html`<span style="display:none" class="part">${p}</span>`)}
     `, container);
     render(container, p);
-    // p.innerHTML = container;
     bindEventListener(container);
   });
-};
+}
 
 export default content;
